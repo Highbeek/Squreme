@@ -1,30 +1,31 @@
-import React, { useState,useRef } from "react";
+import React, { useState, useRef } from "react";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { View, Text, Button, StyleSheet, Dimensions } from "react-native";
 import Onboard from "../components/Onboard";
 import { slides } from "../constants";
+import deprecatedPropTypes from "deprecated-react-native-prop-types";
 
-import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const OnboardingScreens = ({ navigation }) => {
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
-const isCarousel = useRef(null);
- const handleNext = () => {
-   if (currentScreenIndex < slides.length - 1) {
-     setCurrentScreenIndex(currentScreenIndex + 1);
-   } else {
-     navigation.navigate("SignUp");
-   }
- };
+  const isCarousel = useRef(null);
 
- const handleSkipToEnd = () => {
-   if (isCarousel.current) {
-     isCarousel.current.snapToItem(slides.length - 1);
-     setCurrentScreenIndex(slides.length - 1);
-   }
- };
+  const handleNext = () => {
+    if (currentScreenIndex < slides.length - 1) {
+      setCurrentScreenIndex(currentScreenIndex + 1);
+    } else {
+      navigation.navigate("SignUp");
+    }
+  };
+
+  const handleSkipToEnd = () => {
+    if (isCarousel.current) {
+      isCarousel.current.snapToItem(slides.length - 1);
+      setCurrentScreenIndex(slides.length - 1);
+    }
+  };
 
   const renderItem = ({ item, index }) => (
     <Onboard
@@ -64,6 +65,10 @@ const isCarousel = useRef(null);
       </View>
     </View>
   );
+};
+
+OnboardingScreens.propTypes = {
+  navigation: deprecatedPropTypes.object,
 };
 
 const styles = StyleSheet.create({

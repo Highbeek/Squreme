@@ -8,7 +8,7 @@ import {
   Pressable,
   TouchableOpacity,
 } from "react-native";
-import { frame1, logo } from "../assets/index";
+import {  logo } from "../assets/index";
 import { useNavigation } from "@react-navigation/native";
 
 export const Onboard = ({
@@ -39,7 +39,6 @@ export const Onboard = ({
         <TouchableOpacity
           style={styles.getStartedBtn}
           onPress={() => {
-            // onPress();
             goToSignUp();
           }}
         >
@@ -54,9 +53,9 @@ export const Onboard = ({
           <Pressable onPress={skipToEnd}>
             <Text style={styles.btnText}>Skip</Text>
           </Pressable>
-          <TouchableOpacity style={styles.btn} onPress={handleNext}>
+          <Pressable style={styles.btn} onPress={handleNext}>
             <Text style={[styles.btnText, styles.btn]}>Next</Text>
-          </TouchableOpacity>
+          </Pressable>
         </>
       );
     }
@@ -138,6 +137,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     alignItems: "center",
     borderRadius: 15,
+    
   },
   getStartedBtn: {
     backgroundColor: "#fff",

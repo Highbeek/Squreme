@@ -5,6 +5,11 @@ import OnboardingScreens from "./App/scenes/OnboardingScreens";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SignUpScreen from "./App/scenes/SignUpScreen";
+import SignUpVerification from "./App/scenes/SIgnUpVerification";
+import BottomNavigation from "./App/navigation/BottomNavigation";
+import HomeScreen from "./App/scenes/HomeScreen";
+import WalletScreen from "./App/scenes/WalletScreen";
+import ProfileScreen from "./App/scenes/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -14,12 +19,23 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={OnboardingScreens}
-          options={{ headerShown: false }} 
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="SignUp"
           component={SignUpScreen}
-          options={{ headerShown: false }} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Verification"
+          component={SignUpVerification}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name="MainApp"
+          component={BottomNavigation}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
