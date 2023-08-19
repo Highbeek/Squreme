@@ -1,40 +1,54 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   StyleSheet,
-  Text,
   View,
   SafeAreaView,
   TextInput,
-  TouchableOpacity,
   Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function VerificationInput({ isVerified }) {
   const [verificationCode, setVerificationCode] = useState("");
+  const [allDigitsEntered, setAllDigitsEntered] = useState(false);
   const verificationInputRefs = Array.from({ length: 5 }).map(() =>
     useRef(null)
   );
   const navigation = useNavigation();
 
-  const handleVerificationCodeChange = (index, value) => {
-    if (value.length <= 1) {
-      setVerificationCode((prevCode) => {
-        const newCode = prevCode.split("");
-        newCode[index] = value;
-        return newCode.join("");
-      });
-
-      if (value.length === 1 && index < 4) {
-        verificationInputRefs[index + 1].current.focus();
-      }
+  useEffect(() => {
+    if (verificationCode.length === 5) {
+      setAllDigitsEntered(true);
+    } else {
+      setAllDigitsEntered(false);
     }
+  }, [verificationCode]);
+
+  const handleVerificationCodeChange = (index, value) => {
+    if (value.length === 1 && index < 4) {
+      verificationInputRefs[index + 1].current.focus();
+    }
+
+    if (verificationCode.length === 4) {
+      setAllDigitsEntered(true);
+    } else {
+      setAllDigitsEntered(false);
+    }
+
+    const newVerificationCode = verificationCode.split("");
+    newVerificationCode[index] = value;
+    setVerificationCode(newVerificationCode.join(""));
   };
 
   const handleVerificationSubmit = () => {
     Keyboard.dismiss();
-    navigation.navigate("MainApp");
+    if (allDigitsEntered) {
+      navigation.navigate("TabScreens");
+    }
   };
+
+  const returnKeyType =
+    allDigitsEntered && verificationCode.length === 5 ? "done" : "next";
 
   return (
     <SafeAreaView style={styles.container}>
@@ -51,12 +65,9 @@ export default function VerificationInput({ isVerified }) {
             onChangeText={(value) => handleVerificationCodeChange(index, value)}
             maxLength={1}
             keyboardType="numeric"
+            returnKeyType={index === 4 ? returnKeyType : "next"}
             editable={!isVerified}
-            onSubmitEditing={
-              index === verificationInputRefs.length - 1
-                ? handleVerificationSubmit
-                : null
-            }
+            onSubmitEditing={index === 4 ? handleVerificationSubmit : null}
           />
         ))}
       </View>
@@ -69,7 +80,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
   verificationContainer: {
     flexDirection: "row",
     alignItems: "center",

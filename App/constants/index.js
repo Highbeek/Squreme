@@ -1,4 +1,4 @@
-import { frame1, frame2, frame3 } from "../assets/index";
+import { frame1, frame2, frame3,mobile,card,gift } from "../assets/index";
 
 export const slides = [
   {
@@ -15,4 +15,11 @@ export const slides = [
     description: "Spend your money easily without any complications",
     img: frame3,
   },
+];
+
+
+export const quickAccessItems = [
+  { image: mobile, label: "Pay Bills" },
+  { image: gift, label: "GiftCards" },
+  { image: card, label: "Cards" },
 ];
